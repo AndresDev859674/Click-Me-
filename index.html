@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Click Me! BETA Game</title>
+<link rel="icon" type="image/png" href="click-png.png">
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #e0e5ec;
+        background: linear-gradient(135deg, #dfe9f3 0%, #ffffff 100%);
+    }
+
+    .game-container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 350px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .game-container:hover {
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+        margin-bottom: 20px;
+        font-size: 1.8em;
+        color: #333;
+        font-weight: bold;
+    }
+
+    p {
+        margin-bottom: 20px;
+        color: #555;
+        font-size: 0.95em;
+    }
+
+    #click-me-button {
+        padding: 15px 30px;
+        font-size: 1.2em;
+        cursor: pointer;
+        border: none;
+        border-radius: 8px;
+        background-color: #4CAF50;
+        color: white;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    #click-me-button:hover {
+        background-color: #45a049;
+    }
+
+    #click-me-button:active {
+        transform: scale(0.95); /* Instant "press" animation */
+    }
+
+    /* Click animation */
+    .clicked {
+        animation: clickAnimation 0.3s ease;
+    }
+
+    @keyframes clickAnimation {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.2); /* Enlarge on click */
+        }
+        100% {
+            transform: scale(1); /* Return to original size */
+        }
+    }
+
+    #score {
+        font-size: 1em;
+        margin-top: 20px;
+        color: #333;
+    }
+
+    /* Dark mode */
+    @media (prefers-color-scheme: dark) {
+        body {
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+            color: #e0e0e0;
+        }
+
+        .game-container {
+            background-color: #333;
+            color: white;
+            box-shadow: 0 10px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        #click-me-button {
+            background-color: #5070ff;
+        }
+
+        #click-me-button:hover {
+            background-color: #7d95ff;
+        }
+
+        h1, p, #score {
+            color: #f0f0f0;
+        }
+    }
+</style>
+</head>
+<body>
+<div class="game-container">
+    <h1>Click Me! BETA</h1>
+    <p>Click the button as fast as you can!</p>
+    <button id="click-me-button" onclick="handleClick()">Click Here</button>
+    <p id="score">Score: <span id="score-count">0</span></p>
+</div>
+
+<script>
+    var score = 0;
+    var clicksPerSecond = 1;
+    var upgradesUnlocked = [];
+
+    function handleClick() {
+        // Add the click animation class
+        var button = document.getElementById('click-me-button');
+        button.classList.add('clicked');
+        
+        // Remove the class after the animation to reuse it
+        setTimeout(function() {
+            button.classList.remove('clicked');
+        }, 300);
+
+        score++;
+        document.getElementById('score-count').textContent = score;
+
+        // Check if any upgrade is unlocked
+        checkForUpgrades();
+    }
+
+    function checkForUpgrades() {
+        if (score >= 100 && !upgradesUnlocked.includes(20)) {
+            showUpgrade("Upgrade unlocked!", "Get 20 Clicks Per Second", buyUpgrade20);
+        } else if (score >= 300 && !upgradesUnlocked.includes(50)) {
+            showUpgrade("Upgrade unlocked!", "Get 50 Clicks Per Second", buyUpgrade50);
+        } else if (score >= 700 && !upgradesUnlocked.includes(100)) {
+            showUpgrade("Upgrade unlocked!", "Get 100 Clicks Per Second", buyUpgrade100);
+        } else if (score >= 2000 && !upgradesUnlocked.includes(200)) {
+            showUpgrade("Upgrade unlocked!", "Get 200 Clicks Per Second", buyUpgrade200);
+        } else if (score >= 10000 && !upgradesUnlocked.includes(500)) {
+            showUpgrade("Upgrade unlocked!", "Get 500 Clicks Per Second", buyUpgrade500);
+        } else if (score >= 30000 && !upgradesUnlocked.includes(1500)) {
+            showUpgrade("Upgrade unlocked!", "Get 1500 Clicks Per Second", buyUpgrade1500);
+        } else if (score >= 100000 && !upgradesUnlocked.includes(5500)) {
+            showUpgrade("Upgrade unlocked!", "Get 5500 Clicks Per Second", buyUpgrade5500);
+        } else if (score >= 500000 && !upgradesUnlocked.includes(10000)) {
+            showUpgrade("Upgrade unlocked!", "Get 10000 Clicks Per Second", buyUpgrade10000);
+        } else if (score >= 1000000 && !upgradesUnlocked.includes(50000)) {
+            showUpgrade("Upgrade unlocked!", "Get 50000 Clicks Per Second", buyUpgrade50000);
+        } else if (score >= 5000000 && !upgradesUnlocked.includes(100000)) {
+            showUpgrade("Upgrade unlocked!", "Get 100000 Clicks Per Second", buyUpgrade100000);
+        } else if (score >= 10000000 && !upgradesUnlocked.includes(500000)) {
+            showUpgrade("Upgrade unlocked!", "Get 500000 Clicks Per Second", buyUpgrade500000);
+        } else if (score >= 50000000 && !upgradesUnlocked.includes(1000000)) {
+            showUpgrade("Upgrade unlocked!", "Get 1000000 Clicks Per Second", buyUpgrade1000000);
+        } else if (score >= 99999999 && !upgradesUnlocked.includes(5000000)) {
+            showUpgrade("Upgrade unlocked!", "Get 5000000 Clicks Per Second", buyUpgrade5000000);
+        }
+    }
+
+    function showUpgrade(message, buttonText, onClick) {
+        if (confirm(message + "\nWould you like to unlock this ability?")) {
+            onClick();
+        }
+    }
+
+    function buyUpgrade20() {
+        clicksPerSecond += 20;
+        upgradesUnlocked.push(20); // Mark the upgrade as unlocked
+    }
+
+    function buyUpgrade50() {
+        clicksPerSecond += 50;
+        upgradesUnlocked.push(50); // Mark the upgrade as unlocked
+    }
+
+    function buyUpgrade100() {
+        clicksPerSecond += 100;
+        upgradesUnlocked.push(100); // Mark the upgrade as unlocked
+    }
+
+    function buyUpgrade200() {
+        clicksPerSecond += 200;
+        upgradesUnlocked.push(200); // Mark the upgrade as unlocked
+    }
+
+    function buyUpgrade500() {
+        clicksPerSecond += 500;
+        upgradesUnlocked.push(500); // Mark the upgrade as unlocked
+    }
+
+    function buyUpgrade1500() {
+        clicksPerSecond += 1500;
+        upgradesUnlocked.push(1500); // Mark the upgrade as unlocked
+    }
+
+    function buyUpgrade5500() {
+        clicksPerSecond += 5500;
+        upgradesUnlocked.push(5500); // Mark the upgrade as unlocked
+    }
+
+    function buyUpgrade10000() {
+        clicksPerSecond += 10000;
+        upgradesUnlocked.push(10000); // Mark the upgrade as unlocked
+    }
+
+    function buyUpgrade50000() {
+        clicksPerSecond += 50000;
+        upgradesUnlocked.push(50000); // Mark the upgrade as unlocked
+    }
+
+    function buyUpgrade100000() {
+        clicksPerSecond += 100000;
+        upgradesUnlocked.push(100000); // Mark the upgrade as unlocked
+    }
+
+    function buyUpgrade500000() {
+        clicksPerSecond += 500000;
+        upgradesUnlocked.push(500000); // Mark the upgrade as unlocked
+    }
+
+    function buyUpgrade1000000() {
+        clicksPerSecond += 1000000;
+        upgradesUnlocked.push(1000000); // Mark the upgrade as unlocked
+    }
+
+    function buyUpgrade5000000() {
+        clicksPerSecond += 5000000;
+        upgradesUnlocked.push(5000000); // Mark the upgrade as unlocked
+    }
+
+    // Increase score per second
+    setInterval(function() {
+        score += clicksPerSecond;
+        document.getElementById('score-count').textContent = score;
+
+        // Check if any auto-clicker upgrade is unlocked
+        checkForUpgrades();
+    }, 1000);
+</script>
+</body>
+</html>
